@@ -11,8 +11,6 @@ USER_WORDS = []
 # Varibale for keeping track of number of keypresses
 CHARS_PRESSED = 0
 
-delete_key = 127
-
 def main():
     choose_td()
     # Starts a timer of 3 seconds.
@@ -70,19 +68,11 @@ def terminal_screen(stdscr):
         word = ""
         while True:
             key = stdscr.getch()                # Gets each character entered by the user
-            #if key == curses.KEY_BACKSPACE or "KEY_BACKSPACE": random fix i tried for issue in below comment
-                #curses.noecho()
-
-            #if key != curses.KEY_BACKSPACE or "KEY_BACKSPACE": random fix i tried for issue in below comment
-                #curses.echo()
-                #CHARS_PRESSED += 1
-                # Adds the entered character to the word
+            CHARS_PRESSED += 1
+            # Adds the entered character to the word
             word += chr(key)
-            if key == curses.KEY_BACKSPACE or "KEY_BACKSPACE":     # If the key pressed is a spacebar so the words loses its last two characters to account for the character removal
-                #stdscr.addstr("\b \b")
-                word = word[:-2] #this method doesn't work on mac (at least with my terminal configuration)
-                #line = line.replace("^", "").replace("?", "")
-
+            if key == curses.KEY_BACKSPACE:     # If the key pressed is a spacebar so the words loses its last two characters to account for the character removal
+                word = word[:-2]
 
             # If the spacebar is pressed then it means the current word is done being typed
             if key == ord(' '):
@@ -116,8 +106,6 @@ def prepare_results():
             break
         total_words += 1
 
-
-    print(os.environ['TERM'])
     duration_for_wpm = TEST_DURATION / 60
     total_wpm = correct_words / duration_for_wpm
     print("<-- Results -->")
