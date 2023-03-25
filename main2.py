@@ -108,12 +108,11 @@ def prepare_results():
 
     duration_for_wpm = TEST_DURATION / 60
     total_wpm = correct_words / duration_for_wpm
-    print("<-- Results -->")
-    print("\tWords per Minute (WPM):", total_wpm)
-    print("\tTotal Words:", total_words)
-    print("\tIncorrect Words:", wrong_words)
-    print("\tAccuracy:", (correct_words / total_words * 100).__round__(2))
-    print("\tTotal Characters Entered:", CHARS_PRESSED)
+    print("WPM:", total_wpm)
+    print("Total Words:", total_words)
+    print("Incorrect Words:", wrong_words)
+    print("Accuracy:", (correct_words / total_words * 100).__round__(2))
+    print("Total Characters Entered:", CHARS_PRESSED)
 
 
 def read_file(path='./words.txt'):
