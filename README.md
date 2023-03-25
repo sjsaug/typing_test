@@ -1,3 +1,1 @@
-ISSUE : On mac, there may be some issues when using the backspace/delete keys (and perhaps other keys that get pressed by accident such as enter), I haven't found a fix for this issue yet, but I did troubleshoot for a few hours and I believe it's caused by a setting in my terminal config on mac, because using a similar terminal config (zsh, etc.) on linux doesn't pose any problems. I will look furhter into this issue and may test on a different mac with the default terminal.
-UPDATE : Found issue, seems to be iterm2 not sending the ^H key in the testing program. If you configure it to send the ^H key in the testing program then it works, but there are some issues when using other things in the terminal.
-FIX : in iterm2 settings go to profiles>keys>key mappings and at the bottom check the box that says "delete key sends ^H" then in the terminal run stty erase "^H"
+Fixes to common issues can be found in issues
