@@ -1,1 +1,1 @@
-On mac, there may be some issues when using the backspace/delete keys (and perhaps other keys that get pressed by accident such as enter), I haven't found a fix for this issue yet, but I did troubleshoot for a few hours and I believe it's caused by a setting in my terminal config on mac, because using a similar terminal config (zsh, etc.) on linux doesn't pose any problems. I will look furhter into this issue and may test on a different mac with the default terminal.
+Fixes to common issues can be found in issues
