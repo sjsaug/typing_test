@@ -10,8 +10,7 @@ ALL_WORDS = []
 USER_WORDS = []
 # Varibale for keeping track of number of keypresses
 CHARS_PRESSED = 0
-
-delete_key = 127
+alternate_backspace = 127 # Backspace on mac/some terminal configs can be 127 instead of 8
 
 def main():
     choose_td()
@@ -25,7 +24,7 @@ def main():
 
 def choose_td():
     global TEST_DURATION
-    print("Choose a test duration")
+    print("Choose a test duration in seconds")
     TEST_DURATION = int(input())
 
 
@@ -70,19 +69,11 @@ def terminal_screen(stdscr):
         word = ""
         while True:
             key = stdscr.getch()                # Gets each character entered by the user
-            #if key == curses.KEY_BACKSPACE or "KEY_BACKSPACE": random fix i tried for issue in below comment
-                #curses.noecho()
-
-            #if key != curses.KEY_BACKSPACE or "KEY_BACKSPACE": random fix i tried for issue in below comment
-                #curses.echo()
-                #CHARS_PRESSED += 1
-                # Adds the entered character to the word
+            CHARS_PRESSED += 1
+            # Adds the entered character to the word
             word += chr(key)
-            if key == curses.KEY_BACKSPACE or "KEY_BACKSPACE":     # If the key pressed is a spacebar so the words loses its last two characters to account for the character removal
-                #stdscr.addstr("\b \b")
-                word = word[:-2] #this method doesn't work on mac (at least with my terminal configuration)
-                #line = line.replace("^", "").replace("?", "")
-
+            if key == curses.KEY_BACKSPACE:     # If the key pressed is a spacebar so the words loses its last two characters to account for the character removal
+                word = word[:-2]
 
             # If the spacebar is pressed then it means the current word is done being typed
             if key == ord(' '):
@@ -116,16 +107,13 @@ def prepare_results():
             break
         total_words += 1
 
-
-    print(os.environ['TERM'])
     duration_for_wpm = TEST_DURATION / 60
     total_wpm = correct_words / duration_for_wpm
-    print("<-- Results -->")
-    print("\tWords per Minute (WPM):", total_wpm)
-    print("\tTotal Words:", total_words)
-    print("\tIncorrect Words:", wrong_words)
-    print("\tAccuracy:", (correct_words / total_words * 100).__round__(2))
-    print("\tTotal Characters Entered:", CHARS_PRESSED)
+    print(str(TEST_DURATION) + "s typing test")
+    print("WPM :", total_wpm)
+    accuracy = (correct_words / total_words * 100).__round__(2)
+    print("Accuracy : " + str(accuracy) + "% (" + str(correct_words) + "/" + str(total_words) + " words)")
+    #print("Total Characters Entered :", CHARS_PRESSED) #delete key counts so it isn't accurate plus too many stats being displayed
 
 
 def read_file(path='./words.txt'):
