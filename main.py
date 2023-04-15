@@ -14,6 +14,7 @@ alternate_backspace = 127 # Backspace on mac/some terminal configs can be 127 in
 
 def main():
     choose_td()
+    fix_mac()
     # Starts a timer of 3 seconds.
     start_timer(3)
     # Wraps the terminal_screen() function with the curses initscr().
@@ -151,6 +152,10 @@ def clear():
     """ Clears the screen """
     # clears the screen depending upon the platform (linux/windows)
     os.system("cls" if sys.platform == 'win32' else 'clear')
+
+def fix_mac(): #fixes github issue with backspace key not being recognized. search "backspace" in issues. author of issue is sjsaug17
+    if sys.platform == "darwin":
+        os.system('stty erase "^H"')
 
 
 def start_timer(timer=10):
