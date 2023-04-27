@@ -156,6 +156,7 @@ def clear():
 def fix_mac(): #fixes github issue with backspace key not being recognized. search "backspace" in issues. author of issue is sjsaug17
     if sys.platform == "darwin":
         os.system('stty erase "^H"')
+        #os.system('stty erase "^?"') may cause issues and doesn't actually fix the issue. just leaving it as a comment so the idea of it as a fix is left out of the picture
 
 
 def start_timer(timer):
