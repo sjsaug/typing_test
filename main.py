@@ -13,8 +13,8 @@ CHARS_PRESSED = 0
 alternate_backspace = 127 # Backspace on mac/some terminal configs can be 127 instead of 8
 
 def main():
-    choose_td()
     fix_mac()
+    choose_td()
     # Starts a timer of 3 seconds.
     start_timer(3)
     # Wraps the terminal_screen() function with the curses initscr().
@@ -158,15 +158,15 @@ def fix_mac(): #fixes github issue with backspace key not being recognized. sear
         os.system('stty erase "^H"')
 
 
-def start_timer(timer=10):
+def start_timer(timer):
     """ Sets the timer for timer seconds defaulted to 10 """
-    counter = 0
     # Starts a timer for timer seconds and clears the screen for the test
-    while counter < timer:
-        print("Starting in", timer - counter)
+    while 0 < timer:
+        sys.stdout.write("\rStarting in %ds" % timer)
+        sys.stdout.flush()
+        timer-=1
         time.sleep(1)
-        counter += 1
-        clear()
+    clear()
 
 
 if __name__ == "__main__":
