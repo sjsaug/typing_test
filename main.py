@@ -3,6 +3,7 @@ import sys
 import time
 import random
 import curses
+import configparser
 
 # All the words presented by the computer to the user
 ALL_WORDS = []
@@ -13,6 +14,7 @@ CHARS_PRESSED = 0
 alternate_backspace = 127 # Backspace on mac/some terminal configs can be 127 instead of 8
 
 def main():
+    read_config()
     fix_mac()
     choose_td()
     # Starts a timer of 3 seconds.
@@ -37,7 +39,7 @@ def terminal_screen(stdscr):
     # Gets the max screen size height, width
     _, max_x = stdscr.getmaxyx()
     # Reads all 1000 words in ./words.txt
-    words = read_file()
+    words = read_file('./words.txt')
     # Enables echo in the terminal i.e. you have see what you have written
     curses.echo()
     # Keeps track of the number of spacebars pressed for manipulation
@@ -117,7 +119,7 @@ def prepare_results():
     #print("Total Characters Entered :", CHARS_PRESSED) #delete key counts so it isn't accurate plus too many stats being displayed
 
 
-def read_file(path='./words.txt'):
+def read_file(path):
     """ Reads the files and returns the array of words in the file """
     words = []
     # Simply reads the file 'words.txt' and turns the words array
@@ -154,8 +156,10 @@ def clear():
     os.system("cls" if sys.platform == 'win32' else 'clear')
 
 def fix_mac(): #fixes github issue with backspace key not being recognized. search "backspace" in issues. author of issue is sjsaug17
-    if sys.platform == "darwin":
+    if sys.platform == "darwin" and is_iterm2 == "True":
         os.system('stty erase "^H"')
+        if enable_debugging == "True":
+            print('stty erase has been run')
         #os.system('stty erase "^?"') may cause issues and doesn't actually fix the issue. just leaving it as a comment so the idea of it as a fix is left out of the picture
 
 
@@ -168,6 +172,20 @@ def start_timer(timer):
         timer-=1
         time.sleep(1)
     clear()
+
+def read_config():
+    configParser = configparser.RawConfigParser()
+    configFilePath = r'./tt.cfg'
+    configParser.read(configFilePath)
+    fixes_options = dict(configParser.items('Fixes'))
+    dev_options = dict(configParser.items('Dev'))
+
+    global is_iterm2
+    is_iterm2 = fixes_options['is_iterm2']
+
+    
+    global enable_debugging
+    enable_debugging = dev_options['enable_debugging']
 
 
 if __name__ == "__main__":
