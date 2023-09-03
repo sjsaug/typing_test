@@ -120,13 +120,11 @@ def prepare_results():
 
 def read_file(path):
     """ Reads the files and returns the array of words in the file """
-    words = []
-    # Simply reads the file 'words.txt' and turns the words array
     with open(path, 'r') as f:
-        for word in f.readlines():
-            words.append(word.strip())
-
+        words = [word.strip() for word in f.readlines()]
     return words
+
+ALL_WORDS = read_file('words.txt')
 
 
 def get_random_line(words, words_in_line=12):
