@@ -15,7 +15,6 @@ alternate_backspace = 127 # Backspace on mac/some terminal configs can be 127 in
 
 def main():
     read_config()
-    fix_mac()
     choose_td()
     # Starts a timer of 3 seconds.
     start_timer(3)
@@ -155,13 +154,6 @@ def clear():
     # clears the screen depending upon the platform (linux/windows)
     os.system("cls" if sys.platform == 'win32' else 'clear')
 
-def fix_mac(): #fixes github issue with backspace key not being recognized. search "backspace" in issues. author of issue is sjsaug17
-    if sys.platform == "darwin" and is_iterm2 == "True":
-        os.system('stty erase "^H"')
-        if enable_debugging == "True":
-            print('stty erase has been run')
-        #os.system('stty erase "^?"') may cause issues and doesn't actually fix the issue. just leaving it as a comment so the idea of it as a fix is left out of the picture
-
 
 def start_timer(timer):
     """ Sets the timer for timer seconds defaulted to 10 """
@@ -177,12 +169,7 @@ def read_config():
     configParser = configparser.RawConfigParser()
     configFilePath = r'./tt.cfg'
     configParser.read(configFilePath)
-    fixes_options = dict(configParser.items('Fixes'))
     dev_options = dict(configParser.items('Dev'))
-
-    global is_iterm2
-    is_iterm2 = fixes_options['is_iterm2']
-
     
     global enable_debugging
     enable_debugging = dev_options['enable_debugging']
